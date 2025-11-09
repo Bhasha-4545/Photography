@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Details - Capture Moments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 24px;
+            color: #333;
+            text-decoration: none;
+        }
+        .navbar-brand .capture {
+            color: #E74C3C; /* Red color for 'CAPTURE' */
+        }
+        .navbar-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        .navbar-links a:hover {
+            color: #E74C3C;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background-color: #E74C3C;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -10px;
+            border-radius: 2px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 15px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #E74C3C;
+            outline: none;
+        }
+        .form-group select {
+            appearance: none; /* Remove default arrow */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M287%2C114.1L146.2%2C254.9L5.4%2C114.1H287z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 12px top 50%;
+            background-size: 12px auto;
+            padding-right: 30px;
+        }
+        .date-inputs {
+            display: flex;
+            gap: 20px;
+        }
+        .date-inputs > div {
+            flex: 1;
+            position: relative;
+        }
+        .date-inputs input {
+            padding-right: 40px; /* Space for icon */
+        }
+        .date-inputs .calendar-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            pointer-events: none; /* Make icon unclickable */
+        }
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .button-group {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .book-now-btn {
+            background-color: #E74C3C;
+            color: #fff;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .book-now-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="navbar-brand"><span class="capture">CAPTURE</span>MOMENTS</a>
+        <div class="navbar-links">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('services') }}">Services</a>
+            <a href="{{ url_for('find_photographers') }}">Find Photographers</a>
+            <a href="{{ url_for('contact_page') }}">Contact</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Booking Details</h2>
+
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="eventType">Event Type</label>
+                <select id="eventType" name="eventType" required>
+                    <option value="">Select Event Type</option>
+                    <option value="Basic Photo Session">Basic Photo Session</option>
+                    <option value="Standard Photo Session">Standard Photo Session</option>
+                    <option value="Premium Photo Session">Premium Photo Session</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Event Dates</label>
+                <div class="date-inputs">
+                    <div>
+                        <label for="startDate">Start Date</label>
+                        <input type="date" id="startDate" name="startDate" required>
+                        <span class="calendar-icon">&#x1F4C5;</span>
+                    </div>
+                    <div>
+                        <label for="endDate">End Date</label>
+                        <input type="date" id="endDate" name="endDate" required>
+                        <span class="calendar-icon">&#x1F4C5;</span>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                // Get today's date in YYYY-MM-DD format
+                const today = new Date().toISOString().split('T')[0];
+                
+                // Set minimum date for start date to today
+                document.getElementById('startDate').setAttribute('min', today);
+                
+                // Update end date minimum when start date changes
+                document.getElementById('startDate').addEventListener('change', function() {
+                    const startDate = this.value;
+                    document.getElementById('endDate').setAttribute('min', startDate);
+                    
+                    // If end date is before new start date, update it
+                    const endDate = document.getElementById('endDate');
+                    if (endDate.value && endDate.value < startDate) {
+                        endDate.value = startDate;
+                    }
+                });
+                
+                // Validate end date is not before start date
+                document.getElementById('endDate').addEventListener('change', function() {
+                    const startDate = document.getElementById('startDate').value;
+                    const endDate = this.value;
+                    
+                    if (startDate && endDate < startDate) {
+                        alert('End date cannot be before start date');
+                        this.value = startDate;
+                    }
+                });
+                
+                // Form validation
+                document.querySelector('form').addEventListener('submit', function(e) {
+                    const startDate = document.getElementById('startDate').value;
+                    const endDate = document.getElementById('endDate').value;
+                    
+                    if (!startDate) {
+                        e.preventDefault();
+                        alert('Please select a start date');
+                        return;
+                    }
+                    
+                    if (!endDate) {
+                        e.preventDefault();
+                        alert('Please select an end date');
+                        return;
+                    }
+                    
+                    if (endDate < startDate) {
+                        e.preventDefault();
+                        alert('End date cannot be before start date');
+                        return;
+                    }
+                });
+            </script>
+
+            <div class="form-group">
+                <label for="fullName">Your Name</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Full Name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="example@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890" pattern="[0-9]{3}[0-9]{3}[0-9]{4}|[0-9]{10}" title="Enter a 10 digit phone number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="package">Package/Price</label>
+                <select id="package" name="package" required>
+                    <option value="">Select Package</option>
+                    <option value="basic">Basic Package - $500</option>
+                    <option value="standard">Standard Package - $1000</option>
+                    <option value="premium">Premium Package - $1500</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="photographer">Select Photographer</label>
+                <select id="photographer" name="photographer" required>
+                    <option value="">Select Photographer</option>
+                    <option value="Kusuma">Kusuma</option>
+                    <option value="Alekhya">Alekhya</option>
+                    <option value="Siri">Siri</option>
+                    <option value="Basha">Basha</option>
+                    <option value="Theja">Theja</option>
+                    <option value="Chandra">Chandra</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="paymentMethod">Payment Method</label>
+                <select id="paymentMethod" name="paymentMethod" required>
+                    <option value="">Select Payment Method</option>
+                    <option value="credit-card">Credit Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="bank-transfer">Bank Transfer</option>
+                    <option value="phonepe">PhonePe</option>
+                    <option value="paytm">Paytm</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="specialRequests">Special Requests</label>
+                <textarea id="specialRequests" name="specialRequests" placeholder="Any specific requirements or notes for the photographer..."></textarea>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="book-now-btn">Book Now</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

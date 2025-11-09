@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed - Capture Moments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for the checkmark icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            background-color: #f8f8f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensures content fills at least the viewport height */
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            width: 100%; /* Ensure navbar spans full width */
+            box-sizing: border-box; /* Include padding in width */
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 24px;
+            color: #333;
+            text-decoration: none;
+        }
+        .navbar-brand .capture {
+            color: #E74C3C; /* Red color for 'CAPTURE' */
+        }
+        .navbar-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        .navbar-links a:hover {
+            color: #E74C3C;
+        }
+
+        .confirmation-container {
+            flex-grow: 1; /* Allows container to take up available space, pushing footer down if there was one */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .confirmation-card {
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .checkmark-icon {
+            color: #28a745; /* Green color for success */
+            font-size: 60px;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .back-home-btn {
+            background-color: #E74C3C;
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none; /* For anchor tag */
+            display: inline-block; /* For proper padding and margin */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-home-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="navbar-brand"><span class="capture">CAPTURE</span>MOMENTS</a>
+        <div class="navbar-links">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('services') }}">Services</a>
+            <a href="{{ url_for('find_photographers') }}">Find Photographers</a>
+            <a href="{{ url_for('contact_page') }}">Contact</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="confirmation-container">
+        <div class="confirmation-card">
+            <i class="fas fa-check-circle checkmark-icon"></i>
+            <h2>Booking Confirmed!</h2>
+            <p>Your photography session has been successfully booked.</p>
+            <p>We've sent a confirmation email to your registered email address. Our team will contact you shortly to discuss further details.</p>
+            <a href="{{ url_for('dashboard') }}" class="back-home-btn">Back to Dashboard</a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capture Moments</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* To ensure the background image covers everything */
+        }
+        .hero-section {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            /* Make sure 'static' folder exists and 'sunset_photographer.jpg' is inside it */
+                /* Use double quotes inside url_for to avoid quote collision in templates
+                    and point to an SVG placeholder that we add to static/. */
+                background-image: url('{{ url_for("static", filename="sunset_photographer.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* Align content to the right */
+            color: white;
+            text-align: right;
+            padding-right: 10%;
+            box-sizing: border-box;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for better text contrast */
+        }
+        .content {
+            position: relative; /* Position content above the overlay */
+            z-index: 1;
+            max-width: 400px;
+        }
+        .content h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .content p {
+            font-size: 1.1em;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+        .get-started-btn {
+            background-color: #ff7f50; /* Coral color */
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .get-started-btn:hover {
+            background-color: #e66a3d;
+        }
+        .header {
+            position: absolute;
+            /* kept for backward compatibility if used elsewhere */
+            display: none;
+        }
+
+        /* Top navigation for landing page */
+        .navbar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2; /* Ensure navbar is above overlay and content */
+            pointer-events: auto;
+        }
+
+        .brand {
+            color: white;
+            font-size: 1.25em;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .brand span { color: #ff5f6d; }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            display: inline-block;
+            transition: opacity 0.15s ease, transform 0.08s ease;
+        }
+
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        .btn-login {
+            color: white;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .btn-register {
+            background: #ff7f50; /* Coral */
+            color: #fff;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}" class="brand">CAPTURE <span>MOMENTS</span></a>
+        <div class="nav-links">
+            <a href="{{ url_for('login') }}" class="btn btn-login">Login</a>
+            <a href="{{ url_for('register') }}" class="btn btn-register">Register</a>
+        </div>
+    </nav>
+    <div class="hero-section">
+        <div class="overlay"></div>
+        <div class="content">
+            <h1>Capture Your Perfect Moments</h1>
+            <p>Connect with professional photographers for your special events, portraits, or any memorable occasion.</p>
+            <!-- Link to the Flask login route -->
+            <a href="{{ url_for('login') }}" class="get-started-btn">Get Started Now</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CaptureMoments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5; /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 380px;
+            box-sizing: border-box;
+        }
+        .logo {
+            color: #28a745; /* Green color for the logo */
+            font-size: 2.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .welcome-message {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group input {
+            width: calc(100% - 20px); /* Account for padding */
+            padding: 12px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        .input-group input::placeholder {
+            color: #aaa;
+        }
+        .sign-in-button {
+            background-color: #ff7f50; /* Orange color for the button */
+            color: white;
+            padding: 15px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .sign-in-button:hover {
+            background-color: #e66a3d;
+        }
+        .create-account-text {
+            margin-top: 25px;
+            font-size: 0.95em;
+            color: #777;
+        }
+        .create-account-text a {
+            color: #ff7f50; /* Orange color for the link */
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .create-account-text a:hover {
+            text-decoration: underline;
+        }
+        .back-home {
+            margin-top: 18px;
+        }
+        .back-home a {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            background: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            font-weight: 600;
+        }
+        .back-home a:hover { background: #f7f7f7; }
+        .forgot-password {
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+        .forgot-password a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .forgot-password a:hover {
+            color: #ff7f50;
+            text-decoration: underline;
+        }
+        /* Styles for Flash Messages */
+        .flashes {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+            margin-top: -15px; /* Adjust spacing */
+        }
+        .flashes li {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .flashes .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .flashes .danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">CaptureMoments</div>
+        <div class="welcome-message">Welcome Back!</div>
+
+        <!-- Flash Messages will appear here -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('login') }}" method="POST">
+            <div class="input-group">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="sign-in-button">Sign In</button>
+            <div class="forgot-password">
+                <a href="{{ url_for('forgot_password') }}">Forgot Password?</a>
+            </div>
+        </form>
+        <div class="create-account-text">
+            New user? <a href="{{ url_for('register') }}">Create account</a>
+        </div>
+        <div class="back-home">
+            <a href="{{ url_for('index') }}">&larr; Back to Homepage</a>
+        </div>
+    </div>
+</body>
+</html>

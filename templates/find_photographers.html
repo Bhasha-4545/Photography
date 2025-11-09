@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capture Moments - Meet Our Photographers</title>
+    <!-- Font Awesome for icons (star ratings, etc.) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts for Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(to right, #4e54c8, #8f44ad);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .navbar-logo span:first-child {
+            color: #ff5f6d;
+        }
+        .navbar-logo span:last-child {
+            color: white;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 1.05em;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            color: #ff7f50;
+        }
+        
+
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover,
+        .navbar .nav-links a.active { /* 'active' class for the current page */
+            color: #ff5722;
+        }
+
+        /* Hero Banner for Photographers Page */
+        .hero-banner {
+            background: linear-gradient(to right, #6a82fb, #fc5c7d); /* Blue to Pink gradient */
+            padding: 80px 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .hero-banner h1 {
+            margin: 0 0 15px 0;
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        .hero-banner p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Featured Photographers Section */
+        .photographers-section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #ff5722; /* Red underline */
+            border-radius: 2px;
+        }
+
+        .photographers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Responsive grid */
+            gap: 30px;
+            justify-content: center; /* Center items if less than 3 */
+        }
+
+        .photographer-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            text-align: left;
+            transition: transform 0.3s ease;
+            position: relative; /* For the 'Featured' tag */
+        }
+
+        .photographer-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .photographer-card .image-wrapper {
+            position: relative;
+            height: 250px; /* Fixed height for consistent image display */
+            overflow: hidden; /* Ensures image corners are rounded */
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .photographer-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Covers the area, cropping if necessary */
+            display: block;
+        }
+
+        .photographer-card .featured-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #ff5722; /* Red tag */
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .photographer-content {
+            padding: 25px;
+        }
+
+        .photographer-content h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .photographer-content .specialty {
+            font-size: 16px;
+            font-weight: 600;
+            color: #777;
+            margin-bottom: 15px;
+        }
+
+        .photographer-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 15px;
+            color: #555;
+        }
+
+        .photographer-rating .stars {
+            color: #ffc107; /* Gold stars */
+            margin-right: 8px;
+        }
+
+        .photographer-rating .rating-value {
+            font-weight: 600;
+            margin-right: 5px;
+            color: #ff5722; /* Red for the rating number */
+        }
+
+        .photographer-content .description {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 0; /* No margin at the bottom */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .photographers-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            .navbar .nav-links {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .navbar .nav-links li {
+                margin: 0 15px 10px;
+            }
+
+            .hero-banner h1 {
+                font-size: 36px;
+            }
+
+            .hero-banner p {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 30px;
+            }
+
+            .photographers-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 25px;
+            }
+
+            .photographer-content h3 {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar .logo {
+                font-size: 20px;
+            }
+
+            .navbar .nav-links a {
+                font-size: 14px;
+            }
+
+            .hero-banner h1 {
+                font-size: 30px;
+            }
+
+            .hero-banner p {
+                font-size: 14px;
+            }
+
+            .section-title {
+                font-size: 26px;
+            }
+
+            .photographer-content {
+                padding: 20px;
+            }
+
+            .photographer-content h3 {
+                font-size: 20px;
+            }
+
+            .photographer-content .specialty,
+            .photographer-rating,
+            .photographer-content .description {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="navbar-logo">
+            <span>CAPTURE</span><span>MOMENTS</span>
+        </a>
+        <div class="navbar-links">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('services') }}">Services</a>
+            <a href="{{ url_for('find_photographers') }}" class="active">Find Photographers</a>
+            <a href="{{ url_for('contact_page') }}">Contact</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="hero-banner">
+        <h1>Meet Our Photographers</h1>
+        <p>Browse our talented team of professional photographers and find the perfect match for your needs.</p>
+    </div>
+
+    <section class="photographers-section">
+        <h2 class="section-title">Featured Photographers</h2>
+
+        <div class="photographers-grid">
+            <!-- Kusuma Card -->
+            <div class="photographer-card">
+                <div class="image-wrapper">
+                    <!-- Use uploaded image from static/ -->
+                    <img src="{{ url_for('static', filename='kusuma.jpg') }}" alt="Kusuma" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x250/b0e0e6/ffffff?text=Kusuma';">
+                    <span class="featured-tag">Featured</span>
+                </div>
+                <div class="photographer-content">
+                    <h3>Kusuma</h3>
+                    <div class="specialty">Wedding Photography</div>
+                    <div class="photographer-rating">
+                        <span class="stars"><i class="fas fa-star"></i></span>
+                        <span class="rating-value">4.9/5</span>
+                        <span>8 years experience</span>
+                    </div>
+                    <p class="description">Specializing in capturing the most precious moments of your special day with a romantic and elegant style. Kusuma has photographed over 200 weddings worldwide.</p>
+                </div>
+            </div>
+
+            <!-- Alekhya Card -->
+            <div class="photographer-card">
+                <div class="image-wrapper">
+                    <!-- Use uploaded image from static/ -->
+                    <img src="{{ url_for('static', filename='alekhya.jpg') }}" alt="Alekhya" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x250/d2b4de/ffffff?text=Alekhya';">
+                </div>
+                <div class="photographer-content">
+                    <h3>Alekhya</h3>
+                    <div class="specialty">Portrait Photography</div>
+                    <div class="photographer-rating">
+                        <span class="stars"><i class="fas fa-star"></i></span>
+                        <span class="rating-value">4.8/5</span>
+                        <span>6 years experience</span>
+                    </div>
+                    <p class="description">Expert in creating stunning individual and family portraits that capture personality and emotion. Alekhya's studio work is renowned for its perfect lighting.</p>
+                </div>
+            </div>
+
+            <!-- Siri Card -->
+            <div class="photographer-card">
+                <div class="image-wrapper">
+                    <!-- Use uploaded image from static/ -->
+                    <img src="{{ url_for('static', filename='siri.jpg') }}" alt="Siri" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x250/ffe4e1/ffffff?text=Siri';">
+                    <span class="featured-tag">Featured</span>
+                </div>
+                <div class="photographer-content">
+                    <h3>Siri</h3>
+                    <div class="specialty">Commercial Photography</div>
+                    <div class="photographer-rating">
+                        <span class="stars"><i class="fas fa-star"></i></span>
+                        <span class="rating-value">4.7/5</span>
+                        <span>7 years experience</span>
+                    </div>
+                    <p class="description">Professional product and architectural photography to elevate your brand's visual identity. Siri has worked with Fortune 500 companies and luxury brands.</p>
+                </div>
+            </div>
+
+            <!-- Theja Card -->
+            <div class="photographer-card">
+                <div class="image-wrapper">
+                    <!-- Use uploaded image from static/ -->
+                    <img src="{{ url_for('static', filename='theja.jpg') }}" alt="Theja" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x250/cce5ff/ffffff?text=Theja';">
+                </div>
+                <div class="photographer-content">
+                    <h3>Theja</h3>
+                    <div class="specialty">Event Photography</div>
+                    <div class="photographer-rating">
+                        <span class="stars"><i class="fas fa-star"></i></span>
+                        <span class="rating-value">4.6/5</span>
+                        <span>5 years experience</span>
+                    </div>
+                    <p class="description">Specializing in corporate events and celebrations, capturing the energy and essence of every occasion. Surya is our most requested event photographer.</p>
+                </div>
+            </div>
+
+            <!-- Basha Card -->
+            <div class="photographer-card">
+                <div class="image-wrapper">
+                    <!-- Use uploaded image from static/ -->
+                    <img src="{{ url_for('static', filename='basha.jpg') }}" alt="Basha" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x250/e0ffb0/ffffff?text=Basha';">
+                </div>
+                <div class="photographer-content">
+                    <h3>Basha</h3>
+                    <div class="specialty">Fashion Photography</div>
+                    <div class="photographer-rating">
+                        <span class="stars"><i class="fas fa-star"></i></span>
+                        <span class="rating-value">4.9/5</span>
+                        <span>9 years experience</span>
+                    </div>
+                    <p class="description">Creating high-end fashion imagery with a distinctive editorial style for brands and magazines. Sunder's work has been featured in Vogue and Harper's Bazaar.</p>
+                </div>
+            </div>
+
+            <!-- Chandra Card -->
+            <div class="photographer-card">
+                <div class="image-wrapper">
+                    <!-- Use uploaded image from static/ -->
+                    <img src="{{ url_for('static', filename='chandra.jpg') }}" alt="Chandra" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x250/ffdab9/ffffff?text=Chandra';">
+                </div>
+                <div class="photographer-content">
+                    <h3>Chandra</h3>
+                    <div class="specialty">Real Estate Photography</div>
+                    <div class="photographer-rating">
+                        <span class="stars"><i class="fas fa-star"></i></span>
+                        <span class="rating-value">4.5/5</span>
+                        <span>4 years experience</span>
+                    </div>
+                    <p class="description">Professional property photography showcasing homes and commercial spaces in their best light. James offers drone photography and virtual tours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CaptureMoments</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4e54c8, #8f44ad); /* Blue to Purple gradient */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(0, 0, 0, 0.1); /* Slightly transparent background */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white; /* Changed to white to match the image, though red in the image, this matches gradient contrast */
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        /* If you want the "CAPTUREMOMENTS" text to be red like in the image, use this */
+        .navbar-logo span:first-child {
+            color: #ff5f6d; /* Red color */
+        }
+        .navbar-logo span:last-child {
+            color: white; /* White for the rest */
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 1.05em;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            color: #ff7f50; /* Highlight color on hover */
+        }
+
+        .hero-content {
+            flex-grow: 1; /* Allows content to take up remaining space */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content p {
+            font-size: 1.3em;
+            max-width: 600px;
+            line-height: 1.6;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="navbar-logo">
+            <!-- If you want the two-tone logo text -->
+            <span>CAPTURE</span><span>MOMENTS</span>
+            <!-- Or simply white text -->
+            <!-- CAPTUREMOMENTS -->
+        </a>
+        <div class="navbar-links">
+            <a href="{{ url_for('dashboard') }}" class="active">Dashboard</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('services') }}">Services</a>
+            <a href="{{ url_for('find_photographers') }}">Find Photographers</a>
+            <a href="{{ url_for('contact_page') }}">Contact</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="hero-content">
+        <h1>Welcome, {{ user_name }}!</h1>
+        <p>Professional photography services to capture your most precious moments</p>
+    </div>
+    
+    <section style="padding: 40px 60px;">
+        <div style="max-width:1000px;margin:0 auto;background:rgba(255,255,255,0.95);color:#222;border-radius:10px;padding:24px;box-shadow:0 6px 18px rgba(0,0,0,0.12);">
+            <h2 style="margin-top:0;color:#333;">Your Bookings</h2>
+            {% if bookings and bookings|length > 0 %}
+                <div style="display:flex;flex-direction:column;gap:12px;">
+                    {% for b in bookings %}
+                        <div style="padding:14px;border-radius:8px;border:1px solid #eee;display:flex;justify-content:space-between;align-items:center;">
+                            <div>
+                                <div style="font-weight:700;color:#111;text-transform:capitalize;">
+                                    {{ b.event_type|default('') }}{% if b.package %} — {{ b.package }} package{% endif %}
+                                </div>
+
+                                <div style="font-size:0.95em;color:#555;margin-top:6px;">
+                                    {% if b.start_date or b.end_date %}
+                                        Dates: {{ b.start_date or '—' }} to {{ b.end_date or '—' }}
+                                    {% elif b.date %}
+                                        Date: {{ b.date }}
+                                    {% else %}
+                                        Date: —
+                                    {% endif %}
+                                    {% if b.photographer %} | Photographer: {{ b.photographer }}{% endif %}
+                                </div>
+
+                                <div style="font-size:0.9em;color:#666;margin-top:6px;">
+                                    Contact:
+                                    {% set shown = false %}
+                                    {% if b.full_name %}
+                                        {{ b.full_name }}{% set shown = true %}
+                                    {% endif %}
+                                    {% if b.email %}
+                                        {% if shown %} • {% endif %}{{ b.email }}{% set shown = true %}
+                                    {% endif %}
+                                    {% if b.phone %}
+                                        {% if shown %} • {% endif %}{{ b.phone }}{% set shown = true %}
+                                    {% endif %}
+                                    {% if not shown %} — {% endif %}
+                                </div>
+                            </div>
+
+                            <div style="text-align:right">
+                                <div style="background:#28a745;color:white;padding:8px 12px;border-radius:6px;font-weight:700;">Confirmed</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="color:#555;margin:0;">You don't have any bookings yet. Visit Services to make a booking.</p>
+            {% endif %}
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capture Moments - Our Photography Services</title>
+    <!-- Font Awesome for icons (checkbox checkmark) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts for Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(to right, #4e54c8, #8f44ad); /* Blue to Purple gradient */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .navbar-logo span:first-child {
+            color: #ff5f6d; /* Red color */
+        }
+        .navbar-logo span:last-child {
+            color: white; /* White for the rest */
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 1.05em;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            color: #ff7f50; /* Highlight color on hover */
+        }
+        
+
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover,
+        .navbar .nav-links a.active { /* 'active' class for the current page */
+            color: #ff5722;
+        }
+
+        /* Hero Banner for Services Page */
+        .hero-banner {
+            background: linear-gradient(to right, #6a82fb, #fc5c7d); /* Blue to Pink gradient */
+            padding: 80px 20px; /* Adjust padding for title + subtitle */
+            text-align: center;
+            color: #fff;
+        }
+
+        .hero-banner h1 {
+            margin: 0 0 15px 0;
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        .hero-banner p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Service Packages Section */
+        .service-packages-section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #ff5722; /* Red underline */
+            border-radius: 2px;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Responsive grid for packages */
+            gap: 30px;
+            justify-content: center; /* Center items if less than 3 */
+        }
+
+        .package-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden; /* Ensures image corners are rounded */
+            text-align: left; /* Text content aligns left */
+            transition: transform 0.3s ease;
+            display: flex; /* Use flexbox for internal layout */
+            flex-direction: column; /* Stack image and content vertically */
+        }
+
+        .package-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .package-card img {
+            width: 100%;
+            height: 200px; /* Fixed height for image consistency */
+            object-fit: cover; /* Covers the area, cropping if necessary */
+            display: block; /* Removes extra space below image */
+        }
+
+        .package-content {
+            padding: 25px;
+            flex-grow: 1; /* Allows content area to expand */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .package-content h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .package-content .price {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ff5722; /* Red for pricing */
+            margin-bottom: 15px;
+        }
+
+        .package-content .description {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 20px;
+            flex-grow: 1; /* Allows description to take available space */
+        }
+
+        .package-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 25px 0;
+        }
+
+        .package-features li {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .package-features li i {
+            color: #28a745; /* Green checkmark */
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .package-features li.contact-text {
+            color: #ff5722; /* Red for "Contact for quote" */
+            font-weight: 600;
+        }
+
+        .package-button {
+            display: inline-block;
+            width: 100%;
+            padding: 12px 20px;
+            background-color: #ff5722; /* Red button */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            border: none; /* Remove default button border */
+            cursor: pointer;
+            text-align: center;
+            margin-top: auto; /* Pushes button to the bottom */
+        }
+
+        .package-button:hover {
+            background-color: #e64a19; /* Darker red on hover */
+        }
+
+        /* Specific style for "Contact Us" button if needed to differentiate from "Book Now" */
+        .package-button.contact-us {
+            background-color: #555; /* Different color for 'Contact Us' */
+        }
+
+        .package-button.contact-us:hover {
+            background-color: #333;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .packages-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            .navbar .nav-links {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .navbar .nav-links li {
+                margin: 0 15px 10px;
+            }
+
+            .hero-banner h1 {
+                font-size: 36px;
+            }
+
+            .hero-banner p {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 30px;
+            }
+
+            .packages-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 25px;
+            }
+
+            .package-content h3 {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar .logo {
+                font-size: 20px;
+            }
+
+            .navbar .nav-links a {
+                font-size: 14px;
+            }
+
+            .hero-banner h1 {
+                font-size: 30px;
+            }
+
+            .hero-banner p {
+                font-size: 14px;
+            }
+
+            .section-title {
+                font-size: 26px;
+            }
+
+            .package-content {
+                padding: 20px;
+            }
+
+            .package-content h3 {
+                font-size: 20px;
+            }
+
+            .package-content .price {
+                font-size: 16px;
+            }
+
+            .package-content .description,
+            .package-features li {
+                font-size: 14px;
+            }
+
+            .package-button {
+                padding: 10px 15px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="navbar-logo">
+            <span>CAPTURE</span><span>MOMENTS</span>
+        </a>
+        <div class="navbar-links">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('services') }}" class="active">Services</a>
+            <a href="{{ url_for('find_photographers') }}">Find Photographers</a>
+            <a href="{{ url_for('contact_page') }}">Contact</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="hero-banner">
+        <h1>Our Photography Services</h1>
+        <p>Professional photography experiences tailored to your needs. Browse our comprehensive service offerings below.</p>
+    </div>
+
+    <section class="service-packages-section">
+        <h2 class="section-title">Service Packages</h2>
+
+        <div class="packages-grid">
+            <!-- Wedding Photography Card -->
+            <div class="package-card">
+                <img src="{{ url_for('static', filename='services_wedding.jpg') }}" alt="Wedding Photography" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x200/ffbb33/ffffff?text=Wedding+Photography';">
+                <div class="package-content">
+                    <h3>Wedding Photography</h3>
+                    <div class="price">Starting at $1,200</div>
+                    <p class="description">Capture every magical moment of your special day with our experienced wedding photographers.</p>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check-circle"></i> Full-day coverage (8-10 hours)</li>
+                        <li><i class="fas fa-check-circle"></i> 2 professional photographers</li>
+                        <li><i class="fas fa-check-circle"></i> 500+ edited high-res images</li>
+                        <li><i class="fas fa-check-circle"></i> Online gallery with download</li>
+                        <li><i class="fas fa-check-circle"></i> Engagement session included</li>
+                    </ul>
+                    <a href="{{ url_for('booking') }}" class="package-button">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Portrait Sessions Card -->
+            <div class="package-card">
+                <img src="{{ url_for('static', filename='services_portrait.jpg') }}" alt="Portrait Sessions" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x200/80d0c7/ffffff?text=Portrait+Sessions';">
+                <div class="package-content">
+                    <h3>Portrait Sessions</h3>
+                    <div class="price">Starting at $250</div>
+                    <p class="description">Professional portraits for individuals, couples, families, and graduates.</p>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check-circle"></i> 1-2 hour session</li>
+                        <li><i class="fas fa-check-circle"></i> 1 professional photographer</li>
+                        <li><i class="fas fa-check-circle"></i> 50+ edited high-res images</li>
+                        <li><i class="fas fa-check-circle"></i> Choice of location</li>
+                        <li><i class="fas fa-check-circle"></i> Multiple outfit changes</li>
+                    </ul>
+                    <a href="{{ url_for('booking') }}" class="package-button">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Commercial Photography Card -->
+            <div class="package-card">
+                <img src="{{ url_for('static', filename='services_commercial.jpg') }}" alt="Commercial Photography" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x200/9b59b6/ffffff?text=Commercial+Photography';">
+                <div class="package-content">
+                    <h3>Commercial Photography</h3>
+                    <div class="price">Starting at $500</div>
+                    <p class="description">High-quality images for your business, products, or marketing materials.</p>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check-circle"></i> Half-day or full-day sessions</li>
+                        <li><i class="fas fa-check-circle"></i> Studio or on-location</li>
+                        <li><i class="fas fa-check-circle"></i> Professional lighting setup</li>
+                        <li><i class="fas fa-check-circle"></i> 100+ edited high-res images</li>
+                        <li><i class="fas fa-check-circle"></i> Fast turnaround</li>
+                    </ul>
+                    <a href="{{ url_for('booking') }}" class="package-button">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Event Photography Card -->
+            <div class="package-card">
+                <img src="{{ url_for('static', filename='services_event.jpg') }}" alt="Event Photography" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x200/ff7f50/ffffff?text=Event+Photography';">
+                <div class="package-content">
+                    <h3>Event Photography</h3>
+                    <div class="price">Starting at $400</div>
+                    <p class="description">Professional coverage for corporate events, parties, and special occasions.</p>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check-circle"></i> 2-6 hour coverage</li>
+                        <li><i class="fas fa-check-circle"></i> 1-2 photographers</li>
+                        <li><i class="fas fa-check-circle"></i> 200+ edited high-res images</li>
+                        <li><i class="fas fa-check-circle"></i> Candid and posed shots</li>
+                        <li><i class="fas fa-check-circle"></i> Quick-digital delivery</li>
+                    </ul>
+                    <a href="{{ url_for('booking') }}" class="package-button">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Real Estate Photography Card -->
+            <div class="package-card">
+                <img src="{{ url_for('static', filename='services_realestate.jpg') }}" alt="Real Estate Photography" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x200/2ecc71/ffffff?text=Real+Estate+Photography';">
+                <div class="package-content">
+                    <h3>Real Estate Photography</h3>
+                    <div class="price">Starting at $300</div>
+                    <p class="description">Showcase properties in their best light with professional real estate photography.</p>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check-circle"></i> Interior and exterior shots</li>
+                        <li><i class="fas fa-check-circle"></i> HDR imaging</li>
+                        <li><i class="fas fa-check-circle"></i> Virtual tour options</li>
+                        <li><i class="fas fa-check-circle"></i> 24-hour turnaround</li>
+                        <li><i class="fas fa-check-circle"></i> Drone photography available</li>
+                    </ul>
+                    <a href="{{ url_for('booking') }}" class="package-button">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Custom Package Card -->
+            <div class="package-card">
+                <img src="{{ url_for('static', filename='services_custom.jpg') }}" alt="Custom Photography Package" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x200/3498db/ffffff?text=Custom+Package';">
+                <div class="package-content">
+                    <h3>Custom Package</h3>
+                    <div class="price contact-text">Contact for quote</div>
+                    <p class="description">Need something special? Build your own custom photography package.</p>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check-circle"></i> Tailored to your specific needs</li>
+                        <li><i class="fas fa-check-circle"></i> Flexible duration and services</li>
+                        <li><i class="fas fa-check-circle"></i> Specialized equipment available</li>
+                        <li><i class="fas fa-check-circle"></i> Multiple locations</li>
+                        <li><i class="fas fa-check-circle"></i> Personal consultation</li>
+                    </ul>
+                    <a href="{{ url_for('booking') }}" class="package-button">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

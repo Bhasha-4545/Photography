@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capture Moments - Get In Touch</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts for Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(to right, #4e54c8, #8f44ad);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .navbar-logo span:first-child {
+            color: #ff5f6d;
+        }
+        .navbar-logo span:last-child {
+            color: white;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 1.05em;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            color: #ff7f50;
+        }
+        
+
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover,
+        .navbar .nav-links a.active { /* Added active class for current page */
+            color: #ff5722;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(to right, #6a82fb, #fc5c7d); /* Blue to Pink gradient */
+            padding: 100px 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .hero-banner h1 {
+            margin: 0;
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        /* Contact Info Section */
+        .contact-info-section {
+            padding: 60px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .contact-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .contact-card h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .contact-card p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .contact-channels {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .channel-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.3s ease;
+        }
+
+        .channel-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .channel-item .icon-wrapper {
+            background-color: #ffebee; /* Light red background */
+            border-radius: 50%;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            width: 70px; /* Fixed width for consistent circle size */
+            height: 70px; /* Fixed height for consistent circle size */
+        }
+
+        .channel-item .icon-wrapper i {
+            color: #ff5722; /* Red icon */
+            font-size: 32px;
+        }
+
+        .channel-item h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .channel-item .details {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .channel-item .highlight {
+            color: #ff5722;
+            font-weight: 600;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            .navbar .nav-links {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .navbar .nav-links li {
+                margin: 0 15px 10px;
+            }
+
+            .hero-banner h1 {
+                font-size: 36px;
+            }
+
+            .contact-card {
+                padding: 30px;
+            }
+
+            .contact-channels {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar .logo {
+                font-size: 20px;
+            }
+
+            .navbar .nav-links a {
+                font-size: 14px;
+            }
+
+            .hero-banner h1 {
+                font-size: 30px;
+            }
+
+            .contact-card h2 {
+                font-size: 24px;
+            }
+
+            .channel-item .icon-wrapper {
+                width: 60px;
+                height: 60px;
+                padding: 15px;
+            }
+
+            .channel-item .icon-wrapper i {
+                font-size: 28px;
+            }
+
+            .channel-item h3 {
+                font-size: 18px;
+            }
+
+            .channel-item .details {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="navbar-logo">
+            <span>CAPTURE</span><span>MOMENTS</span>
+        </a>
+        <div class="navbar-links">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('services') }}">Services</a>
+            <a href="{{ url_for('find_photographers') }}">Find Photographers</a>
+            <a href="{{ url_for('contact_page') }}" class="active">Contact</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="hero-banner">
+        <h1>Get In Touch</h1>
+    </div>
+
+    <section class="contact-info-section">
+        <div class="contact-card">
+            <h2>Our Contact Information</h2>
+            <p>Reach out to us through any of these channels</p>
+
+            <div class="contact-channels">
+                <a href="tel:1234567890" class="channel-item">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>Phone</h3>
+                    <div class="details highlight">(123) 456-7890</div>
+                    <div class="details">Mon-Fri: 9am-6pm</div>
+                </a>
+
+                <a href="mailto:info@capturemoments.com" class="channel-item">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <div class="details highlight">info@capturemoments.com</div>
+                    <div class="details">Response within 24 hours</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

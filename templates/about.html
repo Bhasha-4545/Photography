@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - CaptureMoments</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Light background */
+            color: #333;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #ffffff; /* White background for navbar */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #ff5f6d; /* Red for 'CAPTURE' */
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .navbar-logo span:last-child {
+            color: #333; /* Dark for 'MOMENTS' */
+        }
+
+        .navbar-links a {
+            color: #555;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 1.05em;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            color: #ff7f50; /* Highlight color on hover */
+        }
+
+        .about-section {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the top */
+            padding: 80px 50px;
+            gap: 60px; /* Space between text and image */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .mission-content {
+            flex: 1; /* Takes up available space */
+            max-width: 550px;
+        }
+
+        .mission-content h2 {
+            font-size: 2.8em;
+            color: #333;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block; /* To make the underline specific to the text */
+        }
+
+        .mission-content h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 80px; /* Underline width */
+            height: 4px;
+            background-color: #ff7f50; /* Orange underline */
+            border-radius: 2px;
+        }
+
+        .mission-content p {
+            font-size: 1.1em;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 1.8em;
+            color: #ff7f50; /* Icon color */
+            flex-shrink: 0; /* Prevent icon from shrinking */
+            margin-top: 5px; /* Adjust vertical alignment */
+        }
+        /* Specific icon colors if desired, matching the image */
+        .feature-card:nth-child(1) .feature-icon { color: #6a0dad; /* Purple for excellence */ }
+        .feature-card:nth-child(2) .feature-icon { color: #ff5f6d; /* Red for personalized */ }
+        .feature-card:nth-child(3) .feature-icon { color: #ff9100; /* Orange for seamless */ }
+
+
+        .feature-text h3 {
+            font-size: 1.3em;
+            color: #444;
+            margin: 0 0 8px 0;
+        }
+
+        .feature-text p {
+            font-size: 0.95em;
+            color: #777;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .team-image {
+            flex: 1; /* Takes up available space */
+            max-width: 700px;
+            height: 420px; /* Fixed visual area so team photo fills nicely */
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden; /* Ensures image corners are rounded */
+            background-color: #fff; /* Add white background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .team-image img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover; /* Ensures image covers the area nicely (crop-safe) */
+            transition: transform 0.3s ease; /* Smooth zoom effect on hover */
+        }
+
+        .team-image:hover img {
+            transform: scale(1.05); /* Slight zoom on hover */
+        }
+
+        /* Styles for the "Meet Our Photographers" section */
+        .photographers-section {
+            padding: 80px 50px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #f8f9fa;
+        }
+
+        .photographers-section h2 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .photographers-section h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -8px;
+            width: 80px;
+            height: 4px;
+            background-color: #ff7f50; /* Orange underline */
+            border-radius: 2px;
+        }
+
+        .photographers-section > p { /* Targeting the paragraph directly under the section */
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .photographer-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .photographer-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            width: 300px; /* Fixed width for cards */
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .photographer-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .photographer-card img {
+            width: 140px; /* Slightly larger to fit card space */
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover; /* Crop to circle area */
+            margin-bottom: 20px;
+            border: 4px solid #f0f0f0; /* Light border around image */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background-color: #eaeaea; /* Fallback bg while image loads */
+        }
+
+        .photographer-card h3 {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .photographer-card p {
+            font-size: 1em;
+            color: #777;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .photographer-card .specialty {
+            font-weight: bold;
+            color: #ff7f50; /* Orange for specialty */
+        }
+
+        .photographer-card .description {
+            font-size: 0.9em;
+            color: #999;
+            margin-top: 15px;
+        }
+    </style>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="navbar-logo">
+            <span>CAPTURE</span><span>MOMENTS</span>
+        </a>
+        <div class="navbar-links">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('about') }}" class="active">About</a>
+            <a href="{{ url_for('services') }}">Services</a>
+            <a href="{{ url_for('find_photographers') }}">Find Photographers</a>
+            <a href="{{ url_for('contact_page') }}">Contact</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="about-section">
+        <div class="mission-content">
+            <h2>Our Mission</h2>
+            <p>We connect clients with exceptional photographers to create timeless memories through authentic, high-quality imagery.</p>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+                <div class="feature-text">
+                    <h3>Professional Excellence</h3>
+                    <p>Vetted photographers with proven expertise and top-tier equipment for every occasion.</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-heart"></i></div>
+                <div class="feature-text">
+                    <h3>Personalized Service</h3>
+                    <p>Tailored photography experiences that reflect your unique style and vision.</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-trophy"></i></div>
+                <div class="feature-text">
+                    <h3>Seamless Booking</h3>
+                    <p>Easy online scheduling with transparent pricing and reliable support.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-image">
+            <!-- Debug info to verify image path -->
+            {% set image_url = url_for('static', filename='team_photo.jpg') %}
+            <!-- Image path: {{ image_url }} -->
+            <img src="{{ image_url }}" alt="Our Team" onerror="this.onerror=null; this.style.border='2px solid red'; this.style.padding='10px'; this.src=''; this.alt='Image failed to load';">
+        </div>
+    </div>
+
+    <!-- New Section: Meet Our Photographers -->
+    <div class="photographers-section">
+        <h2>Meet Our Photographers</h2>
+        <p>Our network includes award-winning professionals specializing in various photography styles.</p>
+
+        <div class="photographer-grid">
+            <div class="photographer-card">
+                <!-- Replace with actual image paths if available -->
+                <img src="{{ url_for('static', filename='sarah_johnson.jpg') }}" alt="Sarah Johnson" onerror="this.onerror=null;this.src='https://via.placeholder.com/120/cccccc/ffffff?text=SJ';">
+                <h3>Sarah Johnson</h3>
+                <p class="specialty">Wedding & Event Specialist</p>
+                <p class="description">Capturing love stories since 2012</p>
+            </div>
+
+            <div class="photographer-card">
+                <!-- Replace with actual image paths if available -->
+                <img src="{{ url_for('static', filename='mike_chen.jpg') }}" alt="Mike Chen" onerror="this.onerror=null;this.src='https://via.placeholder.com/120/cccccc/ffffff?text=MC';">
+                <h3>Mike Chen</h3>
+                <p class="specialty">Portrait & Fashion</p>
+                <p class="description">Studio and outdoor expertise</p>
+            </div>
+
+            <div class="photographer-card">
+                <!-- Replace with actual image paths if available -->
+                <img src="{{ url_for('static', filename='emma_wilson.jpg') }}" alt="Emma Wilson" onerror="this.onerror=null;this.src='https://via.placeholder.com/120/cccccc/ffffff?text=EW';">
+                <h3>Emma Wilson</h3>
+                <p class="specialty">Commercial & Editorial</p>
+                <p class="description">Product and architecture specialist</p>
+            </div>
+        </div>
+    </div>
+    <!-- End New Section -->
+
+</body>
+</html>
