@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
-from flask_mysqldb import MySQL
+from flask import Flask, render_template, request, redirect, url_for, flash, session, g
+import pymysql
 import os
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
@@ -15,13 +15,29 @@ app.config['MYSQL_HOST'] = os.environ.get('DB_HOST', 'localhost')
 app.config['MYSQL_USER'] = os.environ.get('DB_USER', 'root')
 app.config['MYSQL_PASSWORD'] = os.environ.get('DB_PASSWORD', '')
 app.config['MYSQL_DB'] = os.environ.get('DB_NAME', 'capture_db')
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 # Set Flask environment
 app.debug = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-# Initialize MySQL
-mysql = MySQL(app)
+def get_db():
+    if 'mysql_connection' not in g:
+        g.mysql_connection = pymysql.connect(
+            host=app.config['MYSQL_HOST'],
+            user=app.config['MYSQL_USER'],
+            password=app.config['MYSQL_PASSWORD'],
+            database=app.config['MYSQL_DB'],
+            cursorclass=pymysql.cursors.DictCursor,
+            charset='utf8mb4',
+            autocommit=False,
+        )
+    return g.mysql_connection
+
+
+@app.teardown_appcontext
+def close_db(exception):
+    connection = g.pop('mysql_connection', None)
+    if connection is not None:
+        connection.close()
 
 import secrets
 from datetime import datetime, timedelta
@@ -76,7 +92,7 @@ def init_db():
     try:
         # Test database connection
         print("Testing database connection...")
-        cur = mysql.connection.cursor()
+        cur = get_db().cursor()
         cur.execute("SELECT 1")
         print("Database connection successful!")
 
@@ -160,14 +176,14 @@ def init_db():
                 print(f"Adding missing column '{col}' to bookings table...")
                 cur.execute(f"ALTER TABLE bookings ADD COLUMN {col} {col_def}")
 
-        mysql.connection.commit()
+        get_db().commit()
         cur.close()
         print("Database tables created/updated successfully!")
     except Exception as e:
         print(f"Error initializing database: {str(e)}")
 
 def get_user(username):
-    cur = mysql.connection.cursor()
+    cur = get_db().cursor()
     cur.execute("SELECT * FROM users WHERE username = %s", [username])
     user = cur.fetchone()
     cur.close()
@@ -176,12 +192,12 @@ def get_user(username):
 def create_user(username, password, full_name, email):
     cur = None
     try:
-        cur = mysql.connection.cursor()
+        cur = get_db().cursor()
         hashed_password = generate_password_hash(password)
         print(f"Attempting to create user: username={username}, full_name={full_name}, email={email}")
         cur.execute("INSERT INTO users (username, password, full_name, email) VALUES (%s, %s, %s, %s)",
                     [username, hashed_password, full_name, email])
-        mysql.connection.commit()
+        get_db().commit()
         print("User created successfully in database")
         return True
     except Exception as e:
@@ -199,7 +215,7 @@ def create_user(username, password, full_name, email):
 
 def get_bookings(user_id):
     """Get all bookings for a user."""
-    cursor = mysql.connection.cursor()
+    cursor = get_db().cursor()
     try:
         cursor.execute("""
             SELECT id, photographer, date, time, start_date, end_date, package, full_name, email, phone, special_requests
@@ -214,7 +230,7 @@ def get_bookings(user_id):
 def create_booking(user_id, photographer, date, time, package,
                    start_date=None, end_date=None, full_name='', email='', phone='', special_requests='', event_type=None):
     """Create a new booking in the database. Accepts optional contact and range fields."""
-    cursor = mysql.connection.cursor()
+    cursor = get_db().cursor()
     try:
         cursor.execute(
             "INSERT INTO bookings (user_id, photographer, date, time, start_date, end_date, package, event_type, full_name, email, phone, special_requests) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
@@ -233,7 +249,7 @@ def create_booking(user_id, photographer, date, time, package,
                 special_requests or ''
             )
         )
-        mysql.connection.commit()
+        get_db().commit()
         return True
     except Exception as e:
         print(f"Error creating booking (create_booking): {type(e).__name__}: {e}")
@@ -303,7 +319,7 @@ def register():
                                 email=email,
                                 full_name=full_name)
         # Also ensure email isn't already registered
-        cur = mysql.connection.cursor()
+        cur = get_db().cursor()
         cur.execute('SELECT id FROM users WHERE email = %s', [email])
         existing_email = cur.fetchone()
         cur.close()
@@ -400,7 +416,7 @@ def forgot_password():
         email = request.form.get('email')
         
         # Check if email exists in database
-        cur = mysql.connection.cursor()
+        cur = get_db().cursor()
         cur.execute('SELECT id FROM users WHERE email = %s', [email])
         user = cur.fetchone()
         
@@ -412,7 +428,7 @@ def forgot_password():
             # Save token to database
             cur.execute('UPDATE users SET reset_token = %s, reset_token_expires = %s WHERE email = %s',
                        [token, expires, email])
-            mysql.connection.commit()
+            get_db().commit()
             
             try:
                 # Send reset email
@@ -443,7 +459,7 @@ def reset_password(token):
             flash('Password does not meet requirements. Please try again.', 'danger')
             return render_template('reset_password.html', token=token)
         
-        cur = mysql.connection.cursor()
+        cur = get_db().cursor()
         cur.execute('''SELECT id FROM users 
                       WHERE reset_token = %s 
                       AND reset_token_expires > NOW()''', [token])
@@ -456,7 +472,7 @@ def reset_password(token):
                           SET password = %s, reset_token = NULL, reset_token_expires = NULL 
                           WHERE id = %s''',
                        [hashed_password, user['id']])
-            mysql.connection.commit()
+            get_db().commit()
             flash('Your password has been successfully reset. Please login with your new password.', 'success')
             return redirect(url_for('login'))
         else:
@@ -464,7 +480,7 @@ def reset_password(token):
             return redirect(url_for('forgot_password'))
             
     # GET request - verify token first
-    cur = mysql.connection.cursor()
+    cur = get_db().cursor()
     cur.execute('''SELECT id FROM users 
                   WHERE reset_token = %s 
                   AND reset_token_expires > NOW()''', [token])
